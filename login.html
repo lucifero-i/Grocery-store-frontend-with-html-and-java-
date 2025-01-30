@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('images/videoplayback2-ezgif.com-video-to-gif-converter.gif') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      transition: background 1s ease-in-out;
+    }
+
+    .login-container {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      animation: slideIn 1s ease-in-out;
+    }
+
+    .login-container input {
+      width: 85%;
+      padding: 12px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .login-container input:focus {
+      background-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 8px rgba(0, 150, 255, 0.6);
+    }
+
+    button {
+      background-color: #ff5722;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      margin-top: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease-in-out, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #e64a19;
+      transform: scale(1.1);
+    }
+
+    a {
+      color: #ffab91;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-container p {
+      margin-top: 20px;
+    }
+
+    .login-container img {
+      width: 100px;
+      height: auto;
+      margin-top: 20px;
+      border-radius: 50%;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="Freshcarts.jpg" alt=" Logo">
+    <h1>Join us at Freshcarts</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Enter Username" required><br>
+      <input type="password" id="password" placeholder="Enter Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+    <a href="signup.html">Don't have an account? Sign Up</a>
+  </div>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const storedUser = JSON.parse(localStorage.getItem("admin"));
+
+       // Update the login count in localStorage
+       storedUser.logins = (storedUser.logins || 0) + 1;
+        localStorage.setItem("admin", JSON.stringify(storedUser));
+
+      if (storedUser && storedUser.email === username && storedUser.password === password) {
+        alert("Login successful!");
+        window.location.href = "shopping_mart.html";
+      } else {
+        alert("Invalid username or password!");
+      }
+    });
+  </script>
+</body>
+</html>

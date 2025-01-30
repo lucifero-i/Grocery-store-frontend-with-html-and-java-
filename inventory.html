@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #333;
+      color: white;
+      width: 250px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      display: block;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .sidebar a:hover {
+      background: #555;
+      transform: translateX(5px);
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+    }
+
+    header h1 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    /* Inventory List */
+    .inventory-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .inventory-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .inventory-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .inventory-image img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .product-name {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .stock {
+      font-size: 16px;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="admin.html">Home</a>
+    <a href="retail.html">Retail Partners</a>
+    <a href="sales.html">Sales Reports</a>
+    <a href="inventory.html">Inventory</a>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <header>
+      <h1>Inventory Management</h1>
+    </header>
+
+    <div class="inventory-list" id="inventory-list"></div>
+  </div>
+
+  <script>
+    const products = [
+      { id: 1, name: 'Apple', category: 'fruits', price: 2, image: 'apple.jpg' },
+      { id: 2, name: 'Banana', category: 'fruits', price: 1.5, image: 'banana.jpg' },
+      { id: 3, name: 'Orange', category: 'fruits', price: 2.5, image: 'orange.jpg' },
+      { id: 4, name: 'Grapes', category: 'fruits', price: 3, image: 'grapes.jpg' },
+      { id: 5, name: 'Pineapple', category: 'fruits', price: 3.5, image: 'pineapple.jpg' },
+      { id: 6, name: 'Mango', category: 'fruits', price: 4, image: 'mango.jpg' },
+      { id: 7, name: 'Watermelon', category: 'fruits', price: 5, image: 'watermelon.jpg' },
+      { id: 8, name: 'Lemon', category: 'fruits', price: 1, image: 'lemon.jpg' },
+      { id: 9, name: 'Sanitizer', category: 'households', price: 1.2, image: 'sanitizer.jpg' },
+      { id: 10, name: 'Soap', category: 'households', price: 3, image: 'santoor.jpg' },
+      { id: 11, name: 'Toothpaste', category: 'households', price: 2.5, image: 'toothpaste.jpg' },
+      { id: 12, name: 'Shampoo', category: 'households', price: 4, image: 'shampo.jpg' },
+      { id: 13, name: 'Sponge', category: 'households', price: 1.8, image: 'sponge.jpg' },
+      { id: 14, name: 'Mop', category: 'households', price: 7, image: 'mop.jpg' },
+      { id: 15, name: 'Towel', category: 'households', price: 6, image: 'towel.jpg' },
+      { id: 16, name: 'Chips', category: 'snacks', price: 1.8, image: 'chips.jpg' },
+      { id: 17, name: 'Soda', category: 'snacks', price: 1.2, image: 'soda.jpg' },
+      { id: 18, name: 'Cookies', category: 'snacks', price: 2.2, image: 'cookies.jpg' },
+      { id: 19, name: 'Chocolate', category: 'snacks', price: 3, image: 'chocolate.jpg' },
+      { id: 20, name: 'Candy', category: 'snacks', price: 1, image: 'candy.jpg' },
+      { id: 21, name: 'Popcorn', category: 'snacks', price: 1.5, image: 'popcorn.jpg' },
+      { id: 22, name: 'Salted Nuts', category: 'snacks', price: 2.5, image: 'nuts.jpg' },
+      { id: 23, name: 'Biscuits', category: 'snacks', price: 2, image: 'biscuit.jpg' }
+    ];
+
+    const inventory = JSON.parse(localStorage.getItem("inventory")) || {};
+
+    const inventoryList = document.getElementById("inventory-list");
+
+    // Render inventory cards
+    products.forEach(product => {
+        const productDiv = document.createElement('div');
+      productDiv.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <p>${product.name}</p>
+        <p>Price: $${product.price}</p>
+        <p>Stock: ${inventory[product.name] || 0}</p>
+      `;
+      const inventoryCard = document.createElement("div");
+      inventoryCard.className = "inventory-card";
+      inventoryCard.innerHTML = `
+        <div class="inventory-image">
+          <img src="${product.image}" alt="${product.name}">
+        </div>
+        <div class="product-name">${product.name}</div>
+        <div class="stock">Stock: ${inventory[product.name] || 0}</div>
+      `;
+      inventoryList.appendChild(inventoryCard);
+    });
+  </script>
+</body>
+</html>

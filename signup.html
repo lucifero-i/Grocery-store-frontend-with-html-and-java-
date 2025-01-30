@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('images/videoplayback2-ezgif.com-video-to-gif-converter.gif') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      transition: background 1s ease-in-out;
+    }
+
+    .signup-container {
+      background: rgba(0, 0, 0, 0.7); /* Darkened background */
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+      animation: slideIn 1s ease-in-out;
+    }
+
+    .signup-container input {
+      width: 85%;
+      padding: 12px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .signup-container input:focus {
+      background-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 8px rgba(0, 150, 255, 0.6);
+    }
+
+    button {
+      background-color: #ff5722;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      margin-top: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease-in-out, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #e64a19;
+      transform: scale(1.1);
+    }
+
+    a {
+      color: #ffab91;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-container p {
+      margin-top: 20px;
+    }
+
+    .signup-container img {
+      width: 100px;
+      height: auto;
+      margin-top: 20px;
+      border-radius: 50%;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-30px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h1> Your dream shopping experience is just one sign-up away! </h1>
+    <form id="signup-form">
+      <input type="text" id="username" placeholder="Enter Username" required><br>
+      <input type="email" id="email" placeholder="Enter Email" required><br>
+      <input type="password" id="password" placeholder="Enter Password" required><br>
+      <button type="submit">Sign Up</button>
+    </form>
+    <a href="login.html">Already have an account? Login</a>
+  </div>
+
+  <script>
+    document.getElementById("signup-form").addEventListener("submit", function(event) { 
+      event.preventDefault();
+
+ // Function to save user data with login count
+ function saveUser(username, name, email) {
+      let usersData = JSON.parse(localStorage.getItem("userLogins")) || {};
+
+      if (usersData[email]) {
+        // Increment login count if the email already exists
+        usersData[email].logins += 1;
+      } else {
+        // Add new user data
+        usersData[email] = { name, username, logins: 1 };
+      }
+
+      // Save back to localStorage
+      localStorage.setItem("userLogins", JSON.stringify(usersData));
+    }
+
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+       
+        // Check if there's an existing user in localStorage
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+      const user = users.find(u => u.email === email);
+
+      if (user) {
+        alert("User already exists. Please log in.");
+      } else {
+        // Add new user to the users array
+        const newUser = { email, password, logins: 0 };
+        users.push(newUser); 
+
+      localStorage.setItem("admin", JSON.stringify({ email, password }));
+      alert("Signup successful! Redirecting to login...");
+      window.location.href = "login.html";
+    }});
+  </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      background: #f4f4f4;
+    }
+    .sidebar {
+      background: #333;
+      color: white;
+      width: 250px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar h2 {
+      text-align: center;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: block;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .sidebar a:hover {
+      background: #555;
+      transform: translateX(5px);
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: white;
+      border-left: 3px solid #333;
+      box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .order-list {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .order-list:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transform: scale(1.02);
+    }
+    .order-item {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      transition: background 0.3s;
+    }
+    .order-item:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    .order-number {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .order-details {
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="admin.html">Home</a>
+    <a href="retail.html">Retail Partners</a>
+    <a href="sales.html">Sales Reports</a>
+    <a href="inventory.html">Inventory</a>
+  </div>
+  <div class="main-content">
+    <h1>Revenue Summary</h1>
+    <div class="order-list" id="order-list">
+      <p>Loading orders...</p>
+    </div>
+  </div>
+  <script>
+   function loadOrders() {
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const orderList = document.getElementById("order-list");
+    orderList.innerHTML = "";
+
+    if (orders.length === 0) {
+        orderList.innerHTML = "<p>No orders placed yet.</p>";
+        return;
+    }
+
+    orders.forEach(order => {
+        const orderDiv = document.createElement("div");
+        orderDiv.classList.add("order-item");
+        orderDiv.innerHTML = `
+            <span class="order-number">Order ${order.id}</span><br>
+            <span class="order-details">
+                ${order.items.map(item => `${item.name} (x${item.quantity}) - $${item.price}`).join('<br>')}
+            </span><br>
+            <span class="total-price"><strong>Total: $${order.total.toFixed(2)}</strong></span>
+        `;
+        orderList.appendChild(orderDiv);
+    });
+}
+window.onload = loadOrders;
+
+  </script>
+</body>
+</html>

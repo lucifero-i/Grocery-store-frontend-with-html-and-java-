@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Interface</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #333;
+      color: white;
+      width: 250px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      display: block;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .sidebar a:hover {
+      background: #555;
+      transform: translateX(5px);
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+    }
+
+    header h1 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .admin-logo {
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .admin-logo:hover {
+      transform: scale(1.1);
+    }
+
+    /* Sales Activity Section */
+    .sales-activity {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .sales-activity h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .sales-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sales-item:last-child {
+      border-bottom: none;
+    }
+
+    .sales-item .details {
+      font-size: 16px;
+    }
+
+    .sales-item .quantity {
+      font-weight: bold;
+      font-size: 18px;
+      color: #4CAF50;
+    }
+
+    /* Inventory Section */
+    .inventory {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .inventory h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .inventory-detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .inventory-detail:last-child {
+      border-bottom: none;
+    }
+
+    .inventory-detail .label {
+      font-size: 16px;
+    }
+
+    .inventory-detail .value {
+      font-weight: bold;
+      color: #2196F3;
+    }
+
+    /* Transitions and Hover Effects */
+    .sidebar a:hover, .sales-item:hover, .inventory-detail:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="admin.html">Home</a>
+    <a href="retail.html">Retail Partners</a>
+    <a href="sales.html">Sales Reports</a>
+    <a href="inventory.html">Inventory</a>
+    </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <header>
+      <h1>Admin Dashboard</h1>
+      <img src="Freshcarts.jpg" alt="Admin Logo" class="admin-logo">
+    </header>
+
+    <!-- Sales Activity -->
+    <div class="sales-activity">
+      <h2>Sales Activity</h2>
+      <div class="sales-item">
+        <div class="details">To Be Packed (Qty):</div>
+        <div class="quantity">120</div>
+      </div>
+      <div class="sales-item">
+        <div class="details">To Be Packed (Pkgs):</div>
+        <div class="quantity">40</div>
+      </div>
+      <div class="sales-item">
+        <div class="details">Total Orders:</div>
+        <div class="quantity">200</div>
+      </div>
+      <div class="sales-item">
+        <div class="details">Pending Shipments:</div>
+        <div class="quantity">15</div>
+      </div>
+    </div>
+
+    <!-- Inventory Details -->
+    <div class="inventory">
+      <h2>Inventory Details</h2>
+      <div class="inventory-detail">
+        <div class="label">Quantity In Hand:</div>
+        <div class="value">500</div>
+      </div>
+      <div class="inventory-detail">
+        <div class="label">Quantity To Be Received:</div>
+        <div class="value">100</div>
+      </div>
+      <div class="inventory-detail">
+        <div class="label">Out of Stock Items:</div>
+        <div class="value">5</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

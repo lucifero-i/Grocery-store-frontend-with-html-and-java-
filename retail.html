@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retail Partners</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Body and Layout */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      background: #f4f4f4;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #333;
+      color: white;
+      width: 250px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      display: block;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .sidebar a:hover {
+      background: #555;
+      transform: translateX(5px);
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+    }
+
+    header h1 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .admin-logo {
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .admin-logo:hover {
+      transform: scale(1.1);
+    }
+
+    /* Reviews Section */
+    .retail-container {
+      margin-top: 30px;
+    }
+
+    .store-reviews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .store-review-box {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 48%;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .store-review-box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .store-review-box h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .store-review-box p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Transitions and Hover Effects */
+    .sidebar a:hover, .store-review-box:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="admin.html">Home</a>
+    <a href="retail.html">Retail Partners</a>
+    <a href="sales.html">Sales Reports</a>
+    <a href="inventory.html">Inventory</a>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <header>
+      <h1>Retail Partners Dashboard</h1>
+      
+    </header>
+
+    <div class="retail-container">
+      <h1>Customer Reviews</h1>
+
+      <div class="store-reviews">
+        <!-- Reviews for stores will be dynamically inserted here -->
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    window.onload = function() {
+      const reviews = JSON.parse(localStorage.getItem("reviews")) || {};
+
+      const storeReviewsContainer = document.querySelector(".store-reviews");
+      for (const store in reviews) {
+        const storeReviewBox = document.createElement("div");
+        storeReviewBox.className = "store-review-box";
+        const storeTitle = document.createElement("h3");
+        storeTitle.textContent = store;
+        storeReviewBox.appendChild(storeTitle);
+
+        reviews[store].forEach(review => {
+          const reviewText = document.createElement("p");
+          reviewText.textContent = review;
+          storeReviewBox.appendChild(reviewText);
+        });
+
+        storeReviewsContainer.appendChild(storeReviewBox);
+      }
+    }
+  </script>
+
+</body>
+</html>

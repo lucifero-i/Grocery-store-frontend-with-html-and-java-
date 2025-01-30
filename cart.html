@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* General body styles */
+    body {
+      font-family: 'Lora', serif;
+      background: linear-gradient(to right, #d4edda, #fff, #a5d6a7); /* Light green, white, olive green mix */
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Cart container */
+    .cart-container {
+      max-width: 800px;
+      width: 90%;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cart-container:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 15px;
+      color: #2e7d32; /* Dark green */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Cart item styles */
+    .cart-items {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: #e8f5e9; /* Light green */
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cart-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .cart-item span {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2e7d32;
+    }
+
+    /* Remove button */
+    .remove-btn {
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .remove-btn:hover {
+      background: darkred;
+      transform: scale(1.1);
+    }
+
+    /* Total price */
+    .total-price {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #1b5e20; /* Deep green */
+    }
+
+    /* Buttons container */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .btn {
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      padding: 14px 35px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Buy Now button */
+    .buy-now-btn {
+      background-color: #388e3c;
+      color: white;
+    }
+
+    .buy-now-btn:hover {
+      background-color: #2e7d32;
+      transform: translateY(-3px);
+    }
+
+    /* Back button */
+    .back-btn {
+      background-color: #0288d1;
+      color: white;
+    }
+
+    .back-btn:hover {
+      background-color: #026aa7;
+      transform: translateY(-3px);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="cart-container">
+    <h1>🛒 Your Cart</h1>
+    <ul class="cart-items" id="cart-items">
+      <!-- Products will be loaded dynamically -->
+    </ul>
+
+    <p class="total-price" id="total-price">Total: $0</p>
+
+    <div class="btn-container">
+      <button class="buy-now-btn" onclick="redirectToStoreSelection()">Buy Now</button>
+      <button class="back-btn" onclick="redirectToShopping()">Back to Shopping</button>
+    </div>
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Function to display cart items
+    function displayCart() {
+      const cartContainer = document.getElementById("cart-items");
+      const totalPriceElement = document.getElementById("total-price");
+
+      cartContainer.innerHTML = ""; // Clear cart before updating
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        totalPriceElement.innerText = "Total: $0";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+
+        const cartItem = document.createElement("li");
+        cartItem.classList.add("cart-item");
+        cartItem.innerHTML = `
+          <span>${item.name} - $${item.price} x ${item.quantity}</span>
+          <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+        `;
+
+        cartContainer.appendChild(cartItem);
+      });
+
+      totalPriceElement.innerText = `Total: $${total.toFixed(2)}`;
+    }
+
+    // Function to remove an item from the cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      displayCart();
+    }
+
+    // Redirect to thank-you page
+    function redirectToStoreSelection() {
+    if (cart.length === 0) {
+        alert("Your cart is empty! Add items before proceeding.");
+        return;
+    }
+
+    // Retrieve stored orders or initialize an empty array
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    // Create a new order entry
+    let newOrder = {
+        id: orders.length + 1,
+        items: [...cart],  // Copy cart items
+        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    };
+
+    // Add new order to orders list
+    orders.push(newOrder);
+
+    // Save updated orders back to localStorage
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    // Clear cart after checkout
+    localStorage.removeItem("cart");
+
+    // Redirect to store selection page
+    window.location.href = 'store_selection.html';
+}
+
+    // Redirect to shopping page
+    function redirectToShopping() {
+      window.location.href = 'shopping_mart.html';
+    }
+
+    // Load cart when page opens
+    displayCart();
+  </script>
+</body>
+</html>
